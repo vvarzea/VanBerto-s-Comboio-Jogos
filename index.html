@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VanBerto's Comboio 🚂</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;min-height:100%;}
+
+body{
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  background:
+    radial-gradient(ellipse at 20% 30%,rgba(80,20,160,0.35) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 70%,rgba(20,60,160,0.30) 0%,transparent 55%),
+    radial-gradient(ellipse at 55% 10%,rgba(160,80,20,0.15) 0%,transparent 45%),
+    linear-gradient(160deg,#02040f 0%,#06091e 40%,#0a0520 100%);
+  animation:bgPulse 8s ease-in-out infinite alternate;
+  min-height:100vh;
+}
+@keyframes bgPulse{0%{filter:hue-rotate(0deg) brightness(1);}100%{filter:hue-rotate(18deg) brightness(1.08);}}
+
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 5%  8%,rgba(255,255,255,0.9),transparent),
+    radial-gradient(1px   1px   at 12% 55%,rgba(255,255,200,0.7),transparent),
+    radial-gradient(2px   2px   at 20% 20%,rgba(255,255,255,0.8),transparent),
+    radial-gradient(1px   1px   at 30% 80%,rgba(200,220,255,0.7),transparent),
+    radial-gradient(1.5px 1.5px at 38% 40%,rgba(255,255,255,0.85),transparent),
+    radial-gradient(1px   1px   at 48% 65%,rgba(255,230,150,0.7),transparent),
+    radial-gradient(2px   2px   at 55% 10%,rgba(255,255,255,0.6),transparent),
+    radial-gradient(1px   1px   at 63% 90%,rgba(200,255,220,0.65),transparent),
+    radial-gradient(1.5px 1.5px at 72% 30%,rgba(255,255,255,0.75),transparent),
+    radial-gradient(1px   1px   at 80% 70%,rgba(255,220,180,0.6),transparent),
+    radial-gradient(1.5px 1.5px at 88% 15%,rgba(255,255,255,0.9),transparent),
+    radial-gradient(1px   1px   at 93% 50%,rgba(200,220,255,0.7),transparent),
+    radial-gradient(2px   2px   at 97% 85%,rgba(255,255,255,0.8),transparent);
+  animation:starsTwinkle 4s ease-in-out infinite alternate;
+}
+@keyframes starsTwinkle{0%{opacity:0.5;}50%{opacity:1;}100%{opacity:0.65;}}
+
+.modal-wrap{position:relative;z-index:1;width:min(600px,98%);}
+
+.card{
+  background:linear-gradient(155deg,#160838,#0a0420);
+  border:2px solid rgba(255,215,0,0.35);
+  border-radius:32px;
+  overflow:hidden;
+  box-shadow:0 0 100px rgba(120,30,255,0.22),0 0 50px rgba(255,160,0,0.14),inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.modal-hero{
+  background:linear-gradient(160deg,#1a0840,#0d0428);
+  padding:22px 28px 16px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.modal-hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 60% 25%,rgba(255,180,0,0.14),transparent 65%),
+    radial-gradient(ellipse at 20% 80%,rgba(80,40,200,0.18),transparent 60%),
+    radial-gradient(ellipse at 85% 75%,rgba(0,180,255,0.10),transparent 55%);
+}
+.modal-hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 20%,rgba(255,255,255,0.9),transparent),
+    radial-gradient(1px   1px   at 28% 60%,rgba(255,255,200,0.7),transparent),
+    radial-gradient(2px   2px   at 44% 15%,rgba(255,255,255,0.8),transparent),
+    radial-gradient(1px   1px   at 60% 40%,rgba(200,220,255,0.7),transparent),
+    radial-gradient(1.5px 1.5px at 75% 10%,rgba(255,255,255,0.85),transparent),
+    radial-gradient(1px   1px   at 88% 55%,rgba(255,230,150,0.7),transparent);
+  animation:starsTwinkle 4s ease-in-out infinite alternate;
+}
+
+.modal-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(24px,6vw,40px);
+  color:#FFD600;
+  text-shadow:0 0 30px rgba(255,214,0,0.6),0 4px 0 rgba(0,0,0,0.4);
+  margin-bottom:2px;
+  position:relative;z-index:1;
+}
+.modal-sub{
+  color:rgba(255,255,255,0.55);
+  font-size:clamp(10px,2.5vw,13px);
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:14px;
+  position:relative;z-index:1;
+}
+
+.modal-vb{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 6px;position:relative;z-index:1;}
+.modal-vb-robot{width:clamp(50px,14vw,72px);animation:vbFloat 3s ease-in-out infinite;}
+.modal-vb-balloon{
+  background:rgba(255,255,255,0.06);
+  border:1.5px solid rgba(255,215,0,0.3);
+  border-radius:16px;padding:8px 14px;
+  font-family:'Fredoka One',cursive;color:#FFD600;
+  font-size:clamp(11px,3vw,14px);
+  text-align:left;position:relative;
+  max-width:min(240px,55vw);
+  line-height:1.5;
+  transition:opacity 0.4s;
+}
+.modal-vb-balloon::before{
+  content:'';position:absolute;left:-10px;top:18px;
+  border-top:8px solid transparent;border-bottom:8px solid transparent;
+  border-right:12px solid rgba(255,215,0,0.3);
+}
+@keyframes vbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+@keyframes vbBlink{0%,92%,100%{transform:scaleY(0);}95%{transform:scaleY(1);}}
+@keyframes waveVB{0%{transform:rotate(0deg);}25%{transform:rotate(-18deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-18deg);}100%{transform:rotate(0deg);}}
+
+.games-section{padding:16px 20px 20px;}
+.games-label{
+  font-family:'Fredoka One',cursive;
+  color:rgba(255,255,255,0.3);
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:12px;text-align:center;
+}
+.games-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+@media(max-width:480px){.games-grid{grid-template-columns:repeat(2,1fr);}}
+
+.game-card{
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.08);
+  border-radius:18px;
+  padding:16px 8px 14px;
+  text-align:center;
+  cursor:pointer;
+  text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  transition:transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position:relative;overflow:hidden;
+}
+.game-card::before{
+  content:'';position:absolute;inset:0;border-radius:18px;
+  background:var(--gc);opacity:0;transition:opacity 0.2s;
+}
+.game-card:hover{transform:translateY(-5px) scale(1.03);border-color:var(--gc);box-shadow:0 0 18px var(--gc-glow);}
+.game-card:hover::before{opacity:0.12;}
+.game-card:hover .game-emoji{transform:scale(1.2) rotate(-5deg);}
+
+.game-emoji{
+  font-size:clamp(28px,8vw,38px);
+  line-height:1;
+  transition:transform 0.2s;
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+.game-name{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(11px,3vw,13px);
+  color:rgba(255,255,255,0.85);
+  line-height:1.2;
+}
+.game-tag{
+  display:inline-block;
+  background:var(--gc);
+  color:#fff;
+  font-size:9px;font-weight:900;letter-spacing:0.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;
+  box-shadow:0 2px 8px var(--gc-glow);
+}
+
+.modal-footer{
+  background:rgba(0,0,0,0.3);
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding:12px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-credit{
+  font-family:'Fredoka One',cursive;
+  color:rgba(255,255,255,0.35);
+  font-size:12px;letter-spacing:0.5px;
+}
+.footer-train{font-size:20px;animation:vbFloat 2s ease-in-out infinite;}
+</style>
+</head>
+<body>
+
+<div class="modal-wrap">
+  <div class="card">
+
+    <div class="modal-hero">
+      <div class="modal-title">🚂 VanBerto's Comboio</div>
+      <div class="modal-sub">Aprende a brincar • Escolhe o teu jogo</div>
+
+      <div class="modal-vb">
+        <div class="modal-vb-robot">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e5f2ff"/>
+                <stop offset="100%" stop-color="#bfdbfe"/>
+              </linearGradient>
+              <linearGradient id="vg3" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#22d3ee"/>
+                <stop offset="100%" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+            <circle cx="40" cy="40" r="34" fill="rgba(147,197,253,0.35)"/>
+            <rect x="18" y="30" width="44" height="32" rx="14" fill="url(#bg3)"/>
+            <circle cx="40" cy="46" r="7" fill="#9ca3af"/>
+            <rect x="22" y="10" width="36" height="26" rx="13" fill="url(#bg3)"/>
+            <rect x="26" y="15" width="28" height="16" rx="8" fill="url(#vg3)"/>
+            <rect x="26" y="15" width="28" height="16" rx="8" fill="#e5f2ff" opacity="0.9"
+              style="transform-origin:40px 23px;animation:vbBlink 5s ease-in-out infinite;"/>
+            <circle cx="33" cy="23" r="2.5" fill="#0f172a"/>
+            <circle cx="47" cy="23" r="2.5" fill="#0f172a"/>
+            <line x1="40" y1="10" x2="40" y2="4" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="40" cy="3" r="2.5" fill="#38bdf8"/>
+            <rect x="12" y="34" width="6" height="20" rx="3" fill="#e5e7eb"/>
+            <rect x="62" y="34" width="6" height="20" rx="3" fill="#e5e7eb"
+              style="transform-origin:65px 44px;animation:waveVB 1.5s ease-in-out infinite;"/>
+            <rect x="22" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
+            <rect x="46" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
+          </svg>
+        </div>
+        <div class="modal-vb-balloon" id="vbMsg">
+          Olá! Sou o VanBerto's 🤖<br>Escolhe um jogo para brincar!
+        </div>
+      </div>
+    </div>
+
+    <div class="games-section">
+      <div class="games-label">🎮 8 jogos disponíveis</div>
+      <div class="games-grid">
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-JogodasCores/" target="_blank"
+           style="--gc:#E91E63;--gc-glow:rgba(233,30,99,0.4);">
+          <div class="game-emoji">🎈</div>
+          <div class="game-name">Jogo das Cores</div>
+          <span class="game-tag">Cores</span>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Animais-Jogo/" target="_blank"
+           style="--gc:#4CAF50;--gc-glow:rgba(76,175,80,0.4);">
+          <div class="game-emoji">🦁</div>
+          <div class="game-name">Jogo dos Animais</div>
+          <span class="game-tag">Animais</span>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Numeros-Jogo/" target="_blank"
+           style="--gc:#2196F3;--gc-glow:rgba(33,150,243,0.4);">
+          <div class="game-emoji">🔢</div>
+          <div class="game-name">Jogo dos Números</div>
+          <span class="game-tag">Números</span>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Frutas-Jogo/" target="_blank"
+           style="--gc:#FF9800;--gc-glow:rgba(255,152,0,0.4);">
+          <div class="game-emoji">🍎</div>
+          <div class="game-name">Jogo das Frutas</div>
+          <span class="game-tag">Frutas</span>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-das-Profissoes/" target="_blank"
+           style="--gc:#9C27B0;--gc-glow:rgba(156,39,176,0.4);">
+          <div class="game-emoji">👨‍⚕️</div>
+          <div class="game-name">Jogo das Profissões</div>
+          <span class="game-tag">Profissões</span>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Veiculos-Jogo/" target="_blank"
+           style="--gc:#00BCD4;--gc-glow:rgba(0,188,212,0.4);">
+          <div class="game-emoji">🚗</div>
+          <div class="game-name">Jogo dos Veículos</div>
+          <span class="game-tag">Veículos</span>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/Vanberto-s-Comboio-Alfabeto-Fotrografico/" target="_blank"
+           style="--gc:#F44336;--gc-glow:rgba(244,67,54,0.4);">
+          <div class="game-emoji">🔤</div>
+          <div class="game-name">Alfabeto Fotográfico</div>
+          <span class="game-tag">Alfabeto</span>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Planetas-/" target="_blank"
+           style="--gc:#3F51B5;--gc-glow:rgba(63,81,181,0.4);">
+          <div class="game-emoji">🪐</div>
+          <div class="game-name">Jogo dos Planetas</div>
+          <span class="game-tag">Planetas</span>
+        </a>
+
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <span class="footer-credit">Professora: Vanda Várzea</span>
+      <span class="footer-train">🚂</span>
+      <span class="footer-credit">VanBerto's</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const msgs = [
+  "Olá! Sou o VanBerto's 🤖<br>Escolhe um jogo para brincar!",
+  "Toca nos balões certos<br>para encher o meu comboio! 🚂",
+  "Aprende cores, animais,<br>números e muito mais! 🎓",
+  "Chega ao fim e ganha<br>todos os vagões! 🏆",
+  "Tens 3 vidas — cuidado<br>com a bomba! 💣",
+];
+let idx = 0;
+const el = document.getElementById('vbMsg');
+setInterval(() => {
+  el.style.opacity = '0';
+  setTimeout(() => {
+    idx = (idx + 1) % msgs.length;
+    el.innerHTML = msgs[idx];
+    el.style.opacity = '1';
+  }, 400);
+}, 3500);
+
+document.querySelectorAll('.game-card').forEach((c, i) => {
+  c.style.opacity = '0';
+  c.style.transform = 'translateY(16px)';
+  c.style.transition = `opacity 0.4s ${i*0.06}s, transform 0.4s ${i*0.06}s, box-shadow 0.2s, border-color 0.2s, background 0.2s`;
+  setTimeout(() => { c.style.opacity='1'; c.style.transform='translateY(0)'; }, 80 + i*60);
+});
+</script>
+</body>
+</html>
