@@ -1,331 +1,479 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#0d1230">
 <title>VanBerto's Comboio 🚂</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{width:100%;min-height:100%;}
-
+:root{--gold:#FFD600;--ink:#0a0420;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{background:#05091a;}
 body{
-  display:flex;align-items:center;justify-content:center;padding:20px;
+  min-height:100vh;min-height:100dvh;display:flex;padding:clamp(10px,3vw,24px);
+  font-family:'Nunito',system-ui,sans-serif;color:#fff;
   background:
     radial-gradient(ellipse at 20% 30%,rgba(80,20,160,0.35) 0%,transparent 55%),
     radial-gradient(ellipse at 80% 70%,rgba(20,60,160,0.30) 0%,transparent 55%),
     radial-gradient(ellipse at 55% 10%,rgba(160,80,20,0.15) 0%,transparent 45%),
     linear-gradient(160deg,#02040f 0%,#06091e 40%,#0a0520 100%);
-  animation:bgPulse 8s ease-in-out infinite alternate;
-  min-height:100vh;
+  background-attachment:fixed;
 }
-@keyframes bgPulse{0%{filter:hue-rotate(0deg) brightness(1);}100%{filter:hue-rotate(18deg) brightness(1.08);}}
-
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:
-    radial-gradient(1.5px 1.5px at 5%  8%,rgba(255,255,255,0.9),transparent),
-    radial-gradient(1px   1px   at 12% 55%,rgba(255,255,200,0.7),transparent),
-    radial-gradient(2px   2px   at 20% 20%,rgba(255,255,255,0.8),transparent),
-    radial-gradient(1px   1px   at 30% 80%,rgba(200,220,255,0.7),transparent),
-    radial-gradient(1.5px 1.5px at 38% 40%,rgba(255,255,255,0.85),transparent),
-    radial-gradient(1px   1px   at 48% 65%,rgba(255,230,150,0.7),transparent),
-    radial-gradient(2px   2px   at 55% 10%,rgba(255,255,255,0.6),transparent),
-    radial-gradient(1px   1px   at 63% 90%,rgba(200,255,220,0.65),transparent),
-    radial-gradient(1.5px 1.5px at 72% 30%,rgba(255,255,255,0.75),transparent),
-    radial-gradient(1px   1px   at 80% 70%,rgba(255,220,180,0.6),transparent),
-    radial-gradient(1.5px 1.5px at 88% 15%,rgba(255,255,255,0.9),transparent),
-    radial-gradient(1px   1px   at 93% 50%,rgba(200,220,255,0.7),transparent),
-    radial-gradient(2px   2px   at 97% 85%,rgba(255,255,255,0.8),transparent);
-  animation:starsTwinkle 4s ease-in-out infinite alternate;
+    radial-gradient(1.5px 1.5px at 5% 8%,rgba(255,255,255,.9),transparent),
+    radial-gradient(1px 1px at 12% 55%,rgba(255,255,200,.7),transparent),
+    radial-gradient(2px 2px at 20% 20%,rgba(255,255,255,.8),transparent),
+    radial-gradient(1px 1px at 30% 80%,rgba(200,220,255,.7),transparent),
+    radial-gradient(1.5px 1.5px at 38% 40%,rgba(255,255,255,.85),transparent),
+    radial-gradient(1px 1px at 48% 65%,rgba(255,230,150,.7),transparent),
+    radial-gradient(2px 2px at 55% 10%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1px 1px at 63% 90%,rgba(200,255,220,.65),transparent),
+    radial-gradient(1.5px 1.5px at 72% 30%,rgba(255,255,255,.75),transparent),
+    radial-gradient(1px 1px at 80% 70%,rgba(255,220,180,.6),transparent),
+    radial-gradient(1.5px 1.5px at 88% 15%,rgba(255,255,255,.9),transparent),
+    radial-gradient(1px 1px at 93% 50%,rgba(200,220,255,.7),transparent),
+    radial-gradient(2px 2px at 97% 85%,rgba(255,255,255,.8),transparent);
+  animation:twinkle 4s ease-in-out infinite alternate;
 }
-@keyframes starsTwinkle{0%{opacity:0.5;}50%{opacity:1;}100%{opacity:0.65;}}
+@keyframes twinkle{0%{opacity:.5}50%{opacity:1}100%{opacity:.65}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(0)}95%{transform:scaleY(1)}}
+@keyframes wave{0%,100%{transform:rotate(0)}25%,75%{transform:rotate(-18deg)}50%{transform:rotate(0)}}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes drive{0%{left:102%}100%{left:-34%}}
+@keyframes puff{0%{opacity:.7;transform:translate(0,0) scale(.5)}100%{opacity:0;transform:translate(14px,-22px) scale(1.4)}}
 
-.modal-wrap{position:relative;z-index:1;width:min(600px,98%);}
-
+.wrap{position:relative;z-index:1;width:min(660px,100%);margin:auto;}
 .card{
   background:linear-gradient(155deg,#160838,#0a0420);
-  border:2px solid rgba(255,215,0,0.35);
-  border-radius:32px;
-  overflow:hidden;
-  box-shadow:0 0 100px rgba(120,30,255,0.22),0 0 50px rgba(255,160,0,0.14),inset 0 1px 0 rgba(255,255,255,0.06);
+  border:2px solid rgba(255,215,0,.35);border-radius:32px;overflow:hidden;
+  box-shadow:0 0 100px rgba(120,30,255,.22),0 0 50px rgba(255,160,0,.14),inset 0 1px 0 rgba(255,255,255,.06);
 }
 
-.modal-hero{
-  background:linear-gradient(160deg,#1a0840,#0d0428);
-  padding:22px 28px 16px;
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;text-align:center;padding:clamp(16px,4vw,26px) clamp(14px,4vw,28px) clamp(12px,3vw,18px);
+  background:linear-gradient(160deg,#1a0840,#0d0428);}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 60% 25%,rgba(255,180,0,.16),transparent 65%),
+             radial-gradient(ellipse at 20% 80%,rgba(80,40,200,.2),transparent 60%),
+             radial-gradient(ellipse at 85% 75%,rgba(0,180,255,.1),transparent 55%);}
+.hero > *{position:relative;z-index:1;}
+.title{font-family:'Fredoka One',cursive;font-size:clamp(26px,7vw,42px);color:var(--gold);line-height:1.1;
+  text-shadow:0 0 30px rgba(255,214,0,.6),0 4px 0 rgba(0,0,0,.4);}
+.sub{margin-top:4px;color:rgba(255,255,255,.6);font-size:clamp(10px,2.6vw,13px);font-weight:900;letter-spacing:1.2px;text-transform:uppercase;}
+/* continuar */
+.resume{display:none;margin:14px auto 0;max-width:420px;align-items:center;justify-content:center;gap:10px;text-decoration:none;color:#fff;
+  font-family:'Fredoka One',cursive;font-size:clamp(14px,4vw,17px);padding:11px 22px;border-radius:50px;
+  background:linear-gradient(135deg,#ff8c00,#ff4500);box-shadow:0 5px 22px rgba(255,100,0,.42);transition:transform .15s;}
+.resume.on{display:flex;}
+.resume:hover{transform:scale(1.03);} .resume:active{transform:scale(.97);}
+.resume small{font-family:'Nunito',sans-serif;font-weight:900;font-size:.68em;letter-spacing:.8px;text-transform:uppercase;opacity:.85;}
+
+/* ── JOGOS ── */
+.games{padding:clamp(14px,3vw,20px) clamp(12px,3vw,20px) clamp(14px,3vw,20px);}
+.games-label{font-family:'Fredoka One',cursive;color:rgba(255,255,255,.4);font-size:12px;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:12px;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-height:480px) and (orientation:landscape){.grid{grid-template-columns:repeat(4,1fr);}}
+
+.game{
+  --gc:#fff;--gg:rgba(255,255,255,.3);
+  position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:14px 8px 12px;border-radius:18px;text-align:center;text-decoration:none;color:inherit;min-height:44px;
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);
+  opacity:0;animation:rise .45s calc(var(--i)*70ms + 120ms) cubic-bezier(.2,.8,.2,1) forwards;
+  transition:transform .2s,border-color .2s,box-shadow .2s,background .2s;
+}
+.game::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,var(--gc),transparent 70%);opacity:.10;transition:opacity .2s;}
+.game:hover,.game:focus-visible{transform:translateY(-5px) scale(1.03);border-color:var(--gc);box-shadow:0 0 20px var(--gg);outline:none;}
+.game:hover::before,.game:focus-visible::before{opacity:.28;}
+.game:active{transform:scale(.96);}
+.game:focus-visible{outline:3px solid #fff;outline-offset:2px;}
+.bubble{position:relative;width:clamp(52px,14vw,64px);height:clamp(52px,14vw,64px);border-radius:50%;display:grid;place-items:center;
+  font-size:clamp(26px,7.5vw,34px);line-height:1;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),var(--gc) 55%,rgba(0,0,0,.35));
+  box-shadow:0 6px 16px rgba(0,0,0,.4),0 0 16px var(--gg),inset 0 -3px 6px rgba(0,0,0,.25);transition:transform .2s;}
+.bubble span{filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));}
+.game:hover .bubble,.game:focus-visible .bubble{transform:scale(1.12) rotate(-6deg);}
+.name{font-family:'Fredoka One',cursive;font-size:clamp(12px,3.2vw,14px);line-height:1.15;color:rgba(255,255,255,.95);}
+.desc{font-size:clamp(10px,2.6vw,11.5px);font-weight:700;line-height:1.3;color:rgba(255,255,255,.55);}
+.play{margin-top:2px;font-family:'Fredoka One',cursive;font-size:11px;letter-spacing:.4px;padding:3px 12px;border-radius:20px;color:#fff;
+  background:var(--gc);box-shadow:0 2px 8px var(--gg);text-shadow:0 1px 2px rgba(0,0,0,.35);}
+.prog{width:100%;margin-top:4px;display:flex;flex-direction:column;gap:3px;align-items:center;}
+.prog-bar{width:82%;height:6px;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden;}
+.prog-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gc),#fff);box-shadow:0 0 8px var(--gg);}
+.prog-txt{font-family:'Fredoka One',cursive;font-size:10.5px;letter-spacing:.3px;color:rgba(255,255,255,.75);}
+.prog-txt.done{color:var(--gold);}
+.new{font-size:10.5px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px;}
+.last{position:absolute;top:6px;right:6px;z-index:2;font-size:9px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;
+  background:var(--gold);color:#3a2a00;padding:2px 7px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.4);}
+
+/* ── RODAPÉ com comboio a andar ── */
+.track{position:relative;height:30px;overflow:hidden;border-top:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.22);}
+.track::after{content:'';position:absolute;left:0;right:0;bottom:5px;height:3px;border-radius:2px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.28) 0 10px,transparent 10px 18px);}
+.train{position:absolute;bottom:6px;left:0;font-size:20px;white-space:nowrap;animation:drive 14s linear infinite;}
+.train i{position:absolute;left:-4px;top:-8px;font-style:normal;font-size:10px;animation:puff 1.4s ease-out infinite;}
+.footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 22px;background:rgba(0,0,0,.3);border-top:1px solid rgba(255,255,255,.06);
+  font-family:'Fredoka One',cursive;font-size:12px;letter-spacing:.5px;color:rgba(255,255,255,.4);}
+
+/* ── VanBerto's LIVRE (flutua pelo ecrã) ── */
+@keyframes vbWander{
+  0%   {transform:translate(0,0) rotate(0deg);}
+  15%  {transform:translate(-22px,-14px) rotate(-4deg);}
+  30%  {transform:translate(-40px,-6px)  rotate(3deg);}
+  45%  {transform:translate(-28px,-20px) rotate(-3deg);}
+  60%  {transform:translate(-10px,-8px)  rotate(4deg);}
+  75%  {transform:translate(-30px,-18px) rotate(-2deg);}
+  100% {transform:translate(0,0) rotate(0deg);}
+}
+@keyframes vbHaloFree{
+  0%,100%{opacity:0.5; transform:translateX(-50%) scale(0.85);}
+  50%    {opacity:1;   transform:translateX(-50%) scale(1.2);}
+}
+@keyframes vbBubbleIn{
+  0%  {opacity:0; transform:scale(0.6) translateY(6px);}
+  60% {opacity:1; transform:scale(1.08) translateY(-2px);}
+  100%{opacity:1; transform:scale(1) translateY(0);}
+}
+@keyframes vbBubbleFloat{
+  0%,100%{transform:translateY(0);}
+  50%    {transform:translateY(-4px);}
+}
+@keyframes vbAntenna{0%,100%{opacity:0.7;}50%{opacity:1;filter:drop-shadow(0 0 4px #38bdf8);}}
+@keyframes waveVBLeft{0%{transform:rotate(0deg);}25%{transform:rotate(18deg);}50%{transform:rotate(0deg);}75%{transform:rotate(18deg);}100%{transform:rotate(0deg);}}
+.vb-free{
+  position:fixed;
+  right:clamp(10px,3vw,36px);
+  bottom:clamp(10px,3vw,30px);
+  width:clamp(78px,14vw,120px);
+  z-index:50;
+  pointer-events:none;
+  animation:vbWander 9s ease-in-out infinite;
+  filter:drop-shadow(0 10px 22px rgba(56,189,248,0.55));
+}
+.vb-free svg,.vb-free canvas{display:block;width:100%;height:auto;}
+.vb-free::before{
+  content:'';
+  position:absolute;
+  left:50%; bottom:-10px;
+  width:78%; height:18px;
+  background:radial-gradient(ellipse at center,rgba(56,189,248,0.6),rgba(56,189,248,0) 70%);
+  transform:translateX(-50%);
+  filter:blur(6px);
+  animation:vbHaloFree 2.4s ease-in-out infinite;
+  pointer-events:none;
+  z-index:-1;
+}
+.vb-free-bubble{
+  position:absolute;
+  bottom:calc(100% + 14px);
+  right:0;
+  background:linear-gradient(135deg,#2a0a4e,#1a0835);
+  border:3px solid #ff6b35;
+  outline:2px solid rgba(255,215,0,0.3);outline-offset:-4px;
+  border-radius:20px;
+  padding:10px 14px 9px;
+  font-family:'Fredoka One',cursive;
+  color:#fff8e0;
+  font-size:clamp(11px,2.6vw,14px);
   text-align:center;
-  position:relative;overflow:hidden;
+  line-height:1.3;
+  white-space:normal;
+  max-width:min(260px,62vw);
+  box-shadow:4px 4px 0 rgba(5,2,15,0.8), 0 0 24px rgba(255,107,53,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+  animation:vbBubbleFloat 3s ease-in-out infinite;
+  transform-origin:80% 100%;
 }
-.modal-hero::before{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse at 60% 25%,rgba(255,180,0,0.14),transparent 65%),
-    radial-gradient(ellipse at 20% 80%,rgba(80,40,200,0.18),transparent 60%),
-    radial-gradient(ellipse at 85% 75%,rgba(0,180,255,0.10),transparent 55%);
+.vb-free-bubble.pop{animation:vbBubbleIn 0.45s cubic-bezier(.34,1.56,.64,1) 1, vbBubbleFloat 3s ease-in-out 0.45s infinite;}
+.vb-free-bubble::after{
+  content:'';
+  position:absolute;
+  bottom:-13px; right:22px;
+  width:0;height:0;
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-top:14px solid #ff6b35;
 }
-.modal-hero::after{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background-image:
-    radial-gradient(1.5px 1.5px at 12% 20%,rgba(255,255,255,0.9),transparent),
-    radial-gradient(1px   1px   at 28% 60%,rgba(255,255,200,0.7),transparent),
-    radial-gradient(2px   2px   at 44% 15%,rgba(255,255,255,0.8),transparent),
-    radial-gradient(1px   1px   at 60% 40%,rgba(200,220,255,0.7),transparent),
-    radial-gradient(1.5px 1.5px at 75% 10%,rgba(255,255,255,0.85),transparent),
-    radial-gradient(1px   1px   at 88% 55%,rgba(255,230,150,0.7),transparent);
-  animation:starsTwinkle 4s ease-in-out infinite alternate;
+.vb-free-bubble::before{
+  content:'';
+  position:absolute;
+  bottom:-8px; right:25px;
+  width:0;height:0;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:10px solid #1a0835;
+  z-index:1;
 }
-
-.modal-title{
-  font-family:'Fredoka One',cursive;
-  font-size:clamp(24px,6vw,40px);
-  color:#FFD600;
-  text-shadow:0 0 30px rgba(255,214,0,0.6),0 4px 0 rgba(0,0,0,0.4);
-  margin-bottom:2px;
-  position:relative;z-index:1;
+/* espaço para o VanBerto's não tapar o fim da página */
+body{padding-bottom:clamp(110px,22vw,170px);}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important;}
+  .game{opacity:1;}
 }
-.modal-sub{
-  color:rgba(255,255,255,0.55);
-  font-size:clamp(10px,2.5vw,13px);
-  font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  margin-bottom:14px;
-  position:relative;z-index:1;
-}
-
-.modal-vb{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 6px;position:relative;z-index:1;}
-.modal-vb-robot{width:clamp(50px,14vw,72px);animation:vbFloat 3s ease-in-out infinite;}
-.modal-vb-balloon{
-  background:rgba(255,255,255,0.06);
-  border:1.5px solid rgba(255,215,0,0.3);
-  border-radius:16px;padding:8px 14px;
-  font-family:'Fredoka One',cursive;color:#FFD600;
-  font-size:clamp(11px,3vw,14px);
-  text-align:left;position:relative;
-  max-width:min(240px,55vw);
-  line-height:1.5;
-  transition:opacity 0.4s;
-}
-.modal-vb-balloon::before{
-  content:'';position:absolute;left:-10px;top:18px;
-  border-top:8px solid transparent;border-bottom:8px solid transparent;
-  border-right:12px solid rgba(255,215,0,0.3);
-}
-@keyframes vbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-@keyframes vbBlink{0%,92%,100%{transform:scaleY(0);}95%{transform:scaleY(1);}}
-@keyframes waveVB{0%{transform:rotate(0deg);}25%{transform:rotate(-18deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-18deg);}100%{transform:rotate(0deg);}}
-
-.games-section{padding:16px 20px 20px;}
-.games-label{
-  font-family:'Fredoka One',cursive;
-  color:rgba(255,255,255,0.3);
-  font-size:11px;letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:12px;text-align:center;
-}
-.games-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-}
-@media(max-width:480px){.games-grid{grid-template-columns:repeat(2,1fr);}}
-
-.game-card{
-  background:rgba(255,255,255,0.04);
-  border:1.5px solid rgba(255,255,255,0.08);
-  border-radius:18px;
-  padding:16px 8px 14px;
-  text-align:center;
-  cursor:pointer;
-  text-decoration:none;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  transition:transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
-  position:relative;overflow:hidden;
-}
-.game-card::before{
-  content:'';position:absolute;inset:0;border-radius:18px;
-  background:var(--gc);opacity:0;transition:opacity 0.2s;
-}
-.game-card:hover{transform:translateY(-5px) scale(1.03);border-color:var(--gc);box-shadow:0 0 18px var(--gc-glow);}
-.game-card:hover::before{opacity:0.12;}
-.game-card:hover .game-emoji{transform:scale(1.2) rotate(-5deg);}
-
-.game-emoji{
-  font-size:clamp(28px,8vw,38px);
-  line-height:1;
-  transition:transform 0.2s;
-  filter:drop-shadow(0 4px 8px rgba(0,0,0,0.4));
-}
-.game-name{
-  font-family:'Fredoka One',cursive;
-  font-size:clamp(11px,3vw,13px);
-  color:rgba(255,255,255,0.85);
-  line-height:1.2;
-}
-.game-tag{
-  display:inline-block;
-  background:var(--gc);
-  color:#fff;
-  font-size:9px;font-weight:900;letter-spacing:0.5px;text-transform:uppercase;
-  padding:3px 10px;border-radius:20px;
-  box-shadow:0 2px 8px var(--gc-glow);
-}
-
-.modal-footer{
-  background:rgba(0,0,0,0.3);
-  border-top:1px solid rgba(255,255,255,0.06);
-  padding:12px 24px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.footer-credit{
-  font-family:'Fredoka One',cursive;
-  color:rgba(255,255,255,0.35);
-  font-size:12px;letter-spacing:0.5px;
-}
-.footer-train{font-size:20px;animation:vbFloat 2s ease-in-out infinite;}
 </style>
 </head>
 <body>
-
-<div class="modal-wrap">
+<main class="wrap">
   <div class="card">
 
-    <div class="modal-hero">
-      <div class="modal-title">🚂 VanBerto's Comboio</div>
-      <div class="modal-sub">Aprende a brincar • Escolhe o teu jogo</div>
+    <header class="hero">
+      <h1 class="title">🚂 VanBerto's Comboio</h1>
+      <p class="sub">Aprende a brincar • Escolhe o teu jogo</p>
 
-      <div class="modal-vb">
-        <div class="modal-vb-robot">
-          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#e5f2ff"/>
-                <stop offset="100%" stop-color="#bfdbfe"/>
-              </linearGradient>
-              <linearGradient id="vg3" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#22d3ee"/>
-                <stop offset="100%" stop-color="#38bdf8"/>
-              </linearGradient>
-            </defs>
-            <circle cx="40" cy="40" r="34" fill="rgba(147,197,253,0.35)"/>
-            <rect x="18" y="30" width="44" height="32" rx="14" fill="url(#bg3)"/>
-            <circle cx="40" cy="46" r="7" fill="#9ca3af"/>
-            <rect x="22" y="10" width="36" height="26" rx="13" fill="url(#bg3)"/>
-            <rect x="26" y="15" width="28" height="16" rx="8" fill="url(#vg3)"/>
-            <rect x="26" y="15" width="28" height="16" rx="8" fill="#e5f2ff" opacity="0.9"
-              style="transform-origin:40px 23px;animation:vbBlink 5s ease-in-out infinite;"/>
-            <circle cx="33" cy="23" r="2.5" fill="#0f172a"/>
-            <circle cx="47" cy="23" r="2.5" fill="#0f172a"/>
-            <line x1="40" y1="10" x2="40" y2="4" stroke="#38bdf8" stroke-width="2"/>
-            <circle cx="40" cy="3" r="2.5" fill="#38bdf8"/>
-            <rect x="12" y="34" width="6" height="20" rx="3" fill="#e5e7eb"/>
-            <rect x="62" y="34" width="6" height="20" rx="3" fill="#e5e7eb"
-              style="transform-origin:65px 44px;animation:waveVB 1.5s ease-in-out infinite;"/>
-            <rect x="22" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
-            <rect x="46" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
-          </svg>
-        </div>
-        <div class="modal-vb-balloon" id="vbMsg">
-          Olá! Sou o VanBerto's 🤖<br>Escolhe um jogo para brincar!
-        </div>
-      </div>
-    </div>
+      <a class="resume" id="resume" href="#" target="_blank" rel="noopener"><small>Continuar</small><span id="resumeName"></span> ▶</a>
+    </header>
 
-    <div class="games-section">
-      <div class="games-label">🎮 8 jogos disponíveis</div>
-      <div class="games-grid">
+    <section class="games" aria-labelledby="gl">
+      <h2 class="games-label" id="gl">🎮 <span id="count">8</span> jogos disponíveis</h2>
+      <nav class="grid" id="grid" aria-label="Jogos"></nav>
+    </section>
 
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-JogodasCores/" target="_blank"
-           style="--gc:#E91E63;--gc-glow:rgba(233,30,99,0.4);">
-          <div class="game-emoji">🎈</div>
-          <div class="game-name">Jogo das Cores</div>
-          <span class="game-tag">Cores</span>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Animais-Jogo/" target="_blank"
-           style="--gc:#4CAF50;--gc-glow:rgba(76,175,80,0.4);">
-          <div class="game-emoji">🦁</div>
-          <div class="game-name">Jogo dos Animais</div>
-          <span class="game-tag">Animais</span>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Numeros-Jogo/" target="_blank"
-           style="--gc:#2196F3;--gc-glow:rgba(33,150,243,0.4);">
-          <div class="game-emoji">🔢</div>
-          <div class="game-name">Jogo dos Números</div>
-          <span class="game-tag">Números</span>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Frutas-Jogo/" target="_blank"
-           style="--gc:#FF9800;--gc-glow:rgba(255,152,0,0.4);">
-          <div class="game-emoji">🍎</div>
-          <div class="game-name">Jogo das Frutas</div>
-          <span class="game-tag">Frutas</span>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-das-Profissoes/" target="_blank"
-           style="--gc:#9C27B0;--gc-glow:rgba(156,39,176,0.4);">
-          <div class="game-emoji">👨‍⚕️</div>
-          <div class="game-name">Jogo das Profissões</div>
-          <span class="game-tag">Profissões</span>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Veiculos-Jogo/" target="_blank"
-           style="--gc:#00BCD4;--gc-glow:rgba(0,188,212,0.4);">
-          <div class="game-emoji">🚗</div>
-          <div class="game-name">Jogo dos Veículos</div>
-          <span class="game-tag">Veículos</span>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/Vanberto-s-Comboio-Alfabeto-Fotrografico/" target="_blank"
-           style="--gc:#F44336;--gc-glow:rgba(244,67,54,0.4);">
-          <div class="game-emoji">🔤</div>
-          <div class="game-name">Alfabeto Fotográfico</div>
-          <span class="game-tag">Alfabeto</span>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Comboio-Planetas-/" target="_blank"
-           style="--gc:#3F51B5;--gc-glow:rgba(63,81,181,0.4);">
-          <div class="game-emoji">🪐</div>
-          <div class="game-name">Jogo dos Planetas</div>
-          <span class="game-tag">Planetas</span>
-        </a>
-
-      </div>
-    </div>
-
-    <div class="modal-footer">
-      <span class="footer-credit">Professora: Vanda Várzea</span>
-      <span class="footer-train">🚂</span>
-      <span class="footer-credit">VanBerto's</span>
-    </div>
+    <div class="track" aria-hidden="true"><div class="train"><i>💨</i>🚂🚃🚃🚃</div></div>
+    <footer class="footer">
+      <span>Professora: Vanda Várzea</span>
+      <span>VanBerto's</span>
+    </footer>
 
   </div>
+</main>
+
+<div class="vb-free" id="vbFree">
+  <div class="vb-free-bubble pop" id="vbFreeMsg">Olá! Sou o VanBerto's 🤖<br>Escolhe um jogo para brincar!</div>
+  <canvas id="vbFreeCv" width="288" height="288" role="img" aria-label="VanBerto's, o robô amigo"></canvas>
 </div>
-
 <script>
-const msgs = [
-  "Olá! Sou o VanBerto's 🤖<br>Escolhe um jogo para brincar!",
-  "Toca nos balões certos<br>para encher o meu comboio! 🚂",
-  "Aprende cores, animais,<br>números e muito mais! 🎓",
-  "Chega ao fim e ganha<br>todos os vagões! 🏆",
-  "Tens 3 vidas — cuidado<br>com a bomba! 💣",
+const GAMES=[
+  {id:'cores',k:'cores',    e:'🎈',n:'Jogo das Cores',      d:'Aprende as cores',          c:'#E91E63',u:'https://vvarzea.github.io/VanBerto-s-Comboio-JogodasCores/'},
+  {id:'animais',k:'animais',  e:'🦁',n:'Jogo dos Animais',    d:'Descobre os animais',       c:'#4CAF50',u:'https://vvarzea.github.io/VanBerto-s-Comboio-Animais-Jogo/'},
+  {id:'numeros',k:'numeros',  e:'🔢',n:'Jogo dos Números',    d:'Conta de 1 a 20',           c:'#2196F3',u:'https://vvarzea.github.io/VanBerto-s-Comboio-Numeros-Jogo/'},
+  {id:'frutas',k:'frutas',   e:'🍎',n:'Jogo das Frutas',     d:'Conhece as frutas',         c:'#FF9800',u:'https://vvarzea.github.io/VanBerto-s-Comboio-Frutas-Jogo/'},
+  {id:'profissoes',k:'profissoes',e:'👨‍⚕️',n:'Jogo das Profissões',d:'O que fazem as pessoas?',   c:'#9C27B0',u:'https://vvarzea.github.io/VanBerto-s-Comboio-das-Profissoes/'},
+  {id:'veiculos',k:'veiculos', e:'🚗',n:'Jogo dos Veículos',   d:'Carros, aviões e barcos',   c:'#00BCD4',u:'https://vvarzea.github.io/VanBerto-s-Comboio-Veiculos-Jogo/'},
+  {id:'alfabeto',k:'letras', e:'🔤',n:'Alfabeto Fotográfico',d:'As letras com imagens',     c:'#F44336',u:'https://vvarzea.github.io/Vanberto-s-Comboio-Alfabeto-Fotrografico/'},
+  {id:'planetas',k:'planetas', e:'🪐',n:'Jogo dos Planetas',   d:'Viaja pelo sistema solar',  c:'#3F51B5',u:'https://vvarzea.github.io/VanBerto-s-Comboio-Planetas-/'}
 ];
-let idx = 0;
-const el = document.getElementById('vbMsg');
-setInterval(() => {
-  el.style.opacity = '0';
-  setTimeout(() => {
-    idx = (idx + 1) % msgs.length;
-    el.innerHTML = msgs[idx];
-    el.style.opacity = '1';
-  }, 400);
-}, 3500);
+const KEY='vb_ultimo_jogo';
+const store={get(){try{return localStorage.getItem(KEY)}catch(e){return null}},set(v){try{localStorage.setItem(KEY,v)}catch(e){}}};
+const hex=(h,a)=>{const n=parseInt(h.slice(1),16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`;};
+const grid=document.getElementById('grid'),last=store.get();
+const MAXLVL=20;
+// cada jogo guarda "jogo_<tema>_lvl" (nível mais alto) e "jogo_<tema>_rec" (recorde) no mesmo site, por isso o menu consegue lê-los
+function progress(g){
+  try{
+    const l=localStorage.getItem('jogo_'+g.k+'_lvl'),r=localStorage.getItem('jogo_'+g.k+'_rec');
+    if(l===null&&r===null)return null;
+    return {lvl:Math.min(MAXLVL,Math.max(1,parseInt(l||'1',10)||1)),rec:parseInt(r||'0',10)||0};
+  }catch(e){return null;}
+}
+const fmt=n=>n.toLocaleString('pt-PT');
 
-document.querySelectorAll('.game-card').forEach((c, i) => {
-  c.style.opacity = '0';
-  c.style.transform = 'translateY(16px)';
-  c.style.transition = `opacity 0.4s ${i*0.06}s, transform 0.4s ${i*0.06}s, box-shadow 0.2s, border-color 0.2s, background 0.2s`;
-  setTimeout(() => { c.style.opacity='1'; c.style.transform='translateY(0)'; }, 80 + i*60);
+function progHtml(g){
+  const p=progress(g);
+  if(!p)return '<div class="new">Ainda não jogaste</div>';
+  const done=p.lvl>=MAXLVL;
+  return `<div class="prog"><div class="prog-bar" role="progressbar" aria-valuemin="1" aria-valuemax="${MAXLVL}" aria-valuenow="${p.lvl}"><i style="width:${Math.round(p.lvl/MAXLVL*100)}%"></i></div>`+
+    `<div class="prog-txt${done?' done':''}">${done?'🏆 Completo!':'Nível '+p.lvl+' de '+MAXLVL}${p.rec?' · ⭐ '+fmt(p.rec):''}</div></div>`;
+}
+GAMES.forEach((g,i)=>{
+  const a=document.createElement('a');
+  a.className='game';a.href=g.u;a.target='_blank';a.rel='noopener';a.dataset.id=g.id;
+  a.style.cssText=`--gc:${g.c};--gg:${hex(g.c,.45)};--i:${i}`;
+  a.setAttribute('aria-label',`${g.n}: ${g.d}`);
+  a.innerHTML=(g.id===last?'<span class="last">⭐ Último</span>':'')+
+    `<div class="bubble"><span>${g.e}</span></div><div class="name">${g.n}</div><div class="desc">${g.d}</div>`+progHtml(g)+`<div class="play">${progress(g)?'Continuar':'Jogar'} ▶</div>`;
+  a.addEventListener('click',()=>store.set(g.id));
+  grid.appendChild(a);
 });
+document.getElementById('count').textContent=GAMES.length;
+{const started=GAMES.filter(g=>progress(g)).length;
+ if(started)document.getElementById('gl').innerHTML='🎮 '+GAMES.length+' jogos • '+started+' já começado'+(started>1?'s':'');}
+let pname='';try{pname=(localStorage.getItem('ja_playerName')||'').trim();}catch(e){}
+
+const lg=GAMES.find(g=>g.id===last);
+if(lg){const r=document.getElementById('resume');r.href=lg.u;r.classList.add('on');
+  document.getElementById('resumeName').textContent=lg.e+' '+lg.n;
+  r.addEventListener('click',()=>store.set(lg.id));}
+
+
+// ── VanBerto's (novo): robô do puzzle, a piscar e a marchar ──
+function rrVan(ctx,x,y,w,h,r){
+  const rr=Math.min(r,w/2,h/2);
+  ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();
+}
+function cfVan(ctx,x,y,r,color){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
+
+function drawVBPuzzle(ctx,blink,step,armsUp){
+  const w=96,h=96;
+  ctx.clearRect(0,0,w,h);
+  ctx.lineJoin="round"; ctx.lineCap="round";
+  ctx.save(); ctx.translate(0,6);
+  const NAVY="#16233e", NAVY2="#26365a", OUT="#101a30";
+  function white(x0,y0,x1,y1){const g=ctx.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,"#ffffff");g.addColorStop(0.55,"#e6edf7");g.addColorStop(1,"#b4c4dc");return g;}
+
+  const LIFT=8, STRIDE=3;
+  let lTop=70, rTop=70, lDX=0, rDX=0;
+  if(step===0){ lTop=70-LIFT; lDX=STRIDE; rDX=-STRIDE; }
+  else if(step===1){ rTop=70-LIFT; rDX=STRIDE; lDX=-STRIDE; }
+  function leg(cx,top){
+    rrVan(ctx,cx-5,top,10,11,4.5); ctx.fillStyle=white(cx-5,top,cx+5,top); ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    const fy=top+9;
+    rrVan(ctx,cx-6.5,fy,13,9,4); ctx.fillStyle=NAVY; ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    rrVan(ctx,cx-6.5,fy+2,13,2.4,1.2); ctx.fillStyle="rgba(255,255,255,0.85)"; ctx.fill();
+    cfVan(ctx,cx-2.5,fy+4.5,1.4,"rgba(255,255,255,0.5)");
+  }
+  leg(41+lDX,lTop); leg(55+rDX,rTop);
+
+  const ARM_SWING = 0.24;
+  const JUMP_RAISE = 2.9;
+  let lArmSwing = 0, rArmSwing = 0;
+  if(armsUp){ lArmSwing = JUMP_RAISE; rArmSwing = -JUMP_RAISE; }
+  else if(step===0){ lArmSwing=-ARM_SWING; rArmSwing=ARM_SWING; }
+  else if(step===1){ lArmSwing=ARM_SWING; rArmSwing=-ARM_SWING; }
+  function arm(sx,swing){
+    ctx.save();
+    const px=sx+4.5, py=52;
+    ctx.translate(px,py); ctx.rotate(swing); ctx.translate(-px,-py);
+    rrVan(ctx,sx,52,9,13,4.5); ctx.fillStyle=white(sx,52,sx+9,52); ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    const hx=sx+4.5, hy=67;
+    cfVan(ctx,hx,hy,5,NAVY);
+    ctx.lineWidth=2.3; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(hx,hy,5,0,Math.PI*2); ctx.stroke();
+    cfVan(ctx,hx-2,hy+1.6,1.4,NAVY2); cfVan(ctx,hx+0.5,hy+2.4,1.4,NAVY2); cfVan(ctx,hx+2.5,hy+1.6,1.4,NAVY2);
+    ctx.restore();
+  }
+  arm(17,lArmSwing); arm(70,rArmSwing);
+
+  rrVan(ctx,26,44,44,32,15); ctx.fillStyle=white(28,46,68,46); ctx.fill();
+  ctx.save(); rrVan(ctx,26,44,44,32,15); ctx.clip();
+  const wg=ctx.createLinearGradient(0,64,0,76); wg.addColorStop(0,"rgba(22,35,62,0)"); wg.addColorStop(0.4,"#1c2c4c"); wg.addColorStop(1,"#142038");
+  ctx.fillStyle=wg; ctx.fillRect(26,62,44,16);
+  ctx.strokeStyle="rgba(16,26,48,0.6)"; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(28,64); ctx.lineTo(68,64); ctx.stroke();
+  ctx.fillStyle="rgba(255,255,255,0.5)"; ctx.beginPath(); ctx.ellipse(36,52,9,5.5,-0.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+  ctx.lineWidth=3; ctx.strokeStyle=OUT; rrVan(ctx,26,44,44,32,15); ctx.stroke();
+
+  cfVan(ctx,48,56,8,NAVY);
+  ctx.lineWidth=2.5; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(48,56,8,0,Math.PI*2); ctx.stroke();
+  const dome=ctx.createRadialGradient(45.5,53.5,1,48,56,7); dome.addColorStop(0,"#aebccf"); dome.addColorStop(0.6,"#5a6a85"); dome.addColorStop(1,"#2b3a57");
+  ctx.fillStyle=dome; ctx.beginPath(); ctx.arc(48,56,5.7,0,Math.PI*2); ctx.fill();
+  cfVan(ctx,46,53.8,1.5,"rgba(255,255,255,0.85)");
+
+  function pod(cx){
+    cfVan(ctx,cx,32,6,NAVY);
+    ctx.lineWidth=2.3; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(cx,32,6,0,Math.PI*2); ctx.stroke();
+    cfVan(ctx,cx,32,2.8,NAVY2); cfVan(ctx,cx-0.8,31,1,"rgba(255,255,255,0.6)");
+  }
+  pod(25); pod(71);
+
+  ctx.fillStyle=NAVY; ctx.beginPath(); ctx.moveTo(45,16); ctx.lineTo(51,16); ctx.lineTo(49.2,8); ctx.lineTo(46.8,8); ctx.closePath(); ctx.fill();
+  const halo=ctx.createRadialGradient(48,5,1,48,5,11); halo.addColorStop(0,"rgba(90,200,255,0.55)"); halo.addColorStop(1,"rgba(90,200,255,0)");
+  ctx.fillStyle=halo; ctx.beginPath(); ctx.arc(48,5,11,0,Math.PI*2); ctx.fill();
+  const bg=ctx.createRadialGradient(46.3,3.5,0.5,48,5,5.5); bg.addColorStop(0,"#e6f7ff"); bg.addColorStop(0.4,"#48b4ff"); bg.addColorStop(1,"#1670d8");
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(48,5,5.5,0,Math.PI*2); ctx.fill();
+  cfVan(ctx,46.2,3.4,1.6,"#ffffff");
+
+  rrVan(ctx,26,14,44,34,17); ctx.fillStyle=white(28,15,68,15); ctx.fill();
+  ctx.lineWidth=3; ctx.strokeStyle=OUT; ctx.stroke();
+  ctx.save(); rrVan(ctx,26,14,44,34,17); ctx.clip();
+  ctx.fillStyle="rgba(255,255,255,0.6)"; ctx.beginPath(); ctx.ellipse(38,19,10,4,-0.5,0,Math.PI*2); ctx.fill(); ctx.restore();
+
+  rrVan(ctx,30,20,36,23,12); ctx.fillStyle=NAVY; ctx.fill();
+  rrVan(ctx,32.5,22,31,19,10);
+  const vg=ctx.createLinearGradient(0,22,0,41); vg.addColorStop(0,"#7fd4ff"); vg.addColorStop(0.5,"#2a9bf0"); vg.addColorStop(1,"#1366c6");
+  ctx.fillStyle=vg; ctx.fill();
+  ctx.save(); rrVan(ctx,32.5,22,31,19,10); ctx.clip();
+  ctx.fillStyle="rgba(255,255,255,0.45)"; ctx.beginPath(); ctx.ellipse(42,25,9,3.5,-0.4,0,Math.PI*2); ctx.fill(); ctx.restore();
+
+  if(!blink){
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(55,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42.3,28.4,1.5,"#fff"); cfVan(ctx,39.9,31,0.8,"#fff");
+    cfVan(ctx,56.3,28.4,1.5,"#fff"); cfVan(ctx,53.9,31,0.8,"#fff");
+  } else if(blink==="wink"){
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42.3,28.4,1.5,"#fff"); cfVan(ctx,39.9,31,0.8,"#fff");
+    ctx.lineWidth=3; ctx.strokeStyle="#0a0f1c"; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(55,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+  } else if(blink==="happy"){
+    ctx.lineWidth=3.2; ctx.strokeStyle="#0a0f1c"; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(41,31,3.9,0.10*Math.PI,0.90*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.arc(55,31,3.9,0.10*Math.PI,0.90*Math.PI); ctx.stroke();
+    cfVan(ctx,33.5,35.5,3,"rgba(255,120,120,0.55)");
+    cfVan(ctx,62.5,35.5,3,"rgba(255,120,120,0.55)");
+  } else if(blink==="sad"){
+    ctx.strokeStyle="#0a0f1c"; ctx.lineWidth=2.3; ctx.lineCap="round";
+    ctx.beginPath(); ctx.moveTo(37,24); ctx.lineTo(44.5,27); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(59,24); ctx.lineTo(51.5,27); ctx.stroke();
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,32,2.8,3.1,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(55,32,2.8,3.1,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42,30.7,1.1,"#fff"); cfVan(ctx,56,30.7,1.1,"#fff");
+    ctx.fillStyle="#6fd0ff";
+    ctx.beginPath();
+    ctx.moveTo(56,35); ctx.quadraticCurveTo(59,40,56,43.5); ctx.quadraticCurveTo(53,40,56,35);
+    ctx.closePath(); ctx.fill();
+  } else {
+    ctx.lineWidth=3; ctx.strokeStyle="#0a0f1c";
+    ctx.beginPath(); ctx.arc(41,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.arc(55,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+  }
+  ctx.fillStyle="#0a0f1c";
+  if(blink==="wink"){
+    ctx.beginPath(); ctx.ellipse(48,36,5.6,3.6,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,37.6,2.9,1.7,0,0,Math.PI); ctx.fill();
+  } else if(blink==="happy"){
+    ctx.beginPath(); ctx.ellipse(48,36,6.2,4.2,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,38,3.2,1.9,0,0,Math.PI); ctx.fill();
+  } else if(blink==="sad"){
+    ctx.strokeStyle="#0a0f1c"; ctx.lineWidth=2.4; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(48,40,4.2,Math.PI,Math.PI*2); ctx.stroke();
+  } else {
+    ctx.beginPath(); ctx.ellipse(48,36,4.6,3.2,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,37.4,2.4,1.5,0,0,Math.PI); ctx.fill();
+  }
+  ctx.restore();
+}
+/* cache de frames do VanBerto's (canvas offscreen 96x96) */
+const _vbFrames={};
+function vbFrame(blink,step,armsUp){
+  const k=String(blink)+'|'+step+'|'+(armsUp?1:0);
+  if(_vbFrames[k])return _vbFrames[k];
+  const c=document.createElement('canvas');c.width=288;c.height=288;
+  const g3=c.getContext('2d');g3.scale(3,3);drawVBPuzzle(g3,blink,step,armsUp);
+  return _vbFrames[k]=c;
+}
+(function(){
+  const cv=document.getElementById('vbFreeCv');if(!cv)return;
+  const c=cv.getContext('2d');let busy=false;
+  const set=(b,s,u)=>{c.clearRect(0,0,288,288);c.drawImage(vbFrame(b,s,u),0,0);};
+  set(false,-1,false);
+  function walk(n=6,sp=170){if(busy)return;busy=true;let i=0;
+    const iv=setInterval(()=>{set(false,i%2?1:0,false);i++;if(i>=n){clearInterval(iv);set(false,-1,false);busy=false;}},sp);}
+  function blink(){if(busy)return;set(true,-1,false);setTimeout(()=>{if(!busy)set(false,-1,false);},180);}
+  setInterval(()=>{if(busy)return;Math.random()<0.4?walk():blink();},3600);
+})();
+
+// mensagens do VanBerto's (a primeira muda se já jogaste)
+const msgs=[
+  lg?`Bem-vindo de volta${pname?', '+pname.replace(/[<>&]/g,''):''}! 🎉<br>Queres continuar ${lg.n.replace(/^Jogo (d[aeo]s?) /,'$1 ')}?`:`Olá${pname?', '+pname.replace(/[<>&]/g,''):''}! Sou o VanBerto's 🤖<br>Escolhe um jogo para brincar!`,
+  "Toca nos balões certos<br>para encher o meu comboio! 🚂",
+  "Aprende cores, animais,<br>números, letras e planetas! 🎓",
+  "Chega ao fim e ganha<br>todos os vagões! 🏆",
+  "Tens 3 vidas — cuidado<br>com a bomba! 💣"
+];
+let idx=0;const el=document.getElementById('vbFreeMsg');el.innerHTML=msgs[0];
+setInterval(()=>{idx=(idx+1)%msgs.length;el.innerHTML=msgs[idx];el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');},4000);
 </script>
 </body>
 </html>
