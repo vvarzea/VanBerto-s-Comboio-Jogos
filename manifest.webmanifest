@@ -1,0 +1,20 @@
+{
+  "id": "./",
+  "name": "VanBerto's Comboio",
+  "short_name": "Comboio",
+  "description": "Jogos do comboio para aprender a brincar com o VanBerto's: cores, animais, números, frutas, profissões, veículos, letras e planetas.",
+  "lang": "pt-PT",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#05091a",
+  "theme_color": "#0d1230",
+  "categories": ["education", "games", "kids"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
