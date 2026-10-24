@@ -1,4 +1,4 @@
-const CACHE='vanberto-comboio-v1';
+const CACHE='vanberto-comboio-v2';
 // Essenciais: se faltar um, a instalação falha (e deve falhar).
 const CORE=['./','index.html','manifest.webmanifest','favicon.png','apple-touch-icon.png','icon-192.png','icon-512.png','icon-maskable-192.png','icon-maskable-512.png'];
 // Fontes: tolerantes — se algum caminho estiver errado, não impede o service worker de instalar.
